@@ -1,10 +1,10 @@
-export class SignUpDto {
-  @String()
-  name: string;
+// export class SignUpDto {
+//   @String()
+//   name: string;
 
-  @IsEmail()
-  email: string;
+//   @IsEmail()
+//   email: string;
 
-  @String()
-  password: string;
-}
+//   @String()
+//   password: string;
+// }

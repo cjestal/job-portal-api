@@ -1,8 +1,8 @@
 
-export class SignInDto {
-    @IsEmail()
-    email: string;
+// export class SignInDto {
+//     @IsEmail()
+//     email: string;
 
-    @IsString()
-    password: string;
-}
+//     @IsString()
+//     password: string;
+// }
