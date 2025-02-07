@@ -9,7 +9,6 @@ async function bootstrap() {
     .setTitle('Job Platform API')
     .setDescription('These are the endpoints for the job platform app for AI Made in Africa')
     .setVersion('1.0')
-    .addTag('cats')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory());

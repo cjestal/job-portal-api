@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
     @Post()
