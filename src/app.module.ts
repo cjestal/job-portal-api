@@ -9,7 +9,14 @@ import { ApplicationsModule } from './applications/applications.module';
 import { JobPostingModule } from './job-posting/job-posting.module';
 
 @Module({
-  imports: [UsersModule, EmployersModule, JobsModule, AuthModule, ApplicationsModule, JobPostingModule],
+  imports: [
+    UsersModule,
+    EmployersModule,
+    JobsModule,
+    AuthModule,
+    ApplicationsModule,
+    JobPostingModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
