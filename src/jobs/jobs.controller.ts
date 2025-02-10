@@ -11,15 +11,14 @@ interface JobPosition {
   imageUri: string;
   postDate: string;
 }
-@ApiTags('Job Postings')
-@Controller('job-posting')
-export class JobPostingController {
+@ApiTags('Jobs')
+@Controller('jobs')
+export class JobsController {
   @Post()
   create(): string {
     return 'This action adds a new job posting';
   }
 
-  @Get()
   @Get()
   findAll(): JobPosition[] {
     return [
