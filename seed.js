@@ -5,25 +5,25 @@ async function main() {
     // Create users
     const user1 = await prisma.user.create({
         data: {
-            id: 1,
-            name: 'John Doe',
-            codeName: 'johndoe123',
-            email: 'johndoe@example.com',
-            phone: '123-456-7890',
-            password: 'password123',
+          name: 'John Doe',
+          codeName: 'fluffyBunny123',
+          email: 'johndoe@example.com',
+          phone: '123-456-7890',
+          password: 'password123',
+          type: 'INDIVIDUAL',
         },
-    });
-
-    const user2 = await prisma.user.create({
+      });
+    
+      const user2 = await prisma.user.create({
         data: {
-            id: 2,
-            name: 'Jane Doe',
-            codeName: 'janedoe123',
-            email: 'janedoe@example.com',
-            phone: '987-654-3210',
-            password: 'password123',
+          name: 'Jane Doe',
+          codeName: 'wackyPenguin123',
+          email: 'janedoe@example.com',
+          phone: '987-654-3210',
+          password: 'password123',
+          type: 'INDIVIDUAL',
         },
-    });
+      });
 
     // Create companies
     const company1 = await prisma.company.create({
