@@ -10,6 +10,7 @@
     "test": "jest",
     "start": "node index.js",
     "initdb": "npx prisma migrate dev --name init",
+    "migration": "npx prisma migrate dev --name \"$(date +\"%Y%m%d%H%M%S\")-migration\"",
     "seed": "node seed.js"
   },
   "dependencies": {
