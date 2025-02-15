@@ -4,7 +4,7 @@ const router = new Router({ prefix: '/companies' });
 const prisma = new PrismaClient();
 
 // Create Company
-router.post('/companies', async (ctx) => {
+router.post('/', async (ctx) => {
     try {
         const company = await prisma.company.create({
             data: {
@@ -24,7 +24,7 @@ router.post('/companies', async (ctx) => {
 });
 
 // Get All Companies
-router.get('/companies', async (ctx) => {
+router.get('', async (ctx) => {
     try {
         const companies = await prisma.company.findMany();
         ctx.body = companies;
@@ -36,7 +36,7 @@ router.get('/companies', async (ctx) => {
 });
 
 // Get Company by ID
-router.get('/companies/:id', async (ctx) => {
+router.get('/:id', async (ctx) => {
     try {
         const id = parseInt(ctx.params.id);
         const company = await prisma.company.findUnique({ where: { id } });
@@ -54,7 +54,7 @@ router.get('/companies/:id', async (ctx) => {
 });
 
 // Update Company
-router.patch('/companies/:id', async (ctx) => {
+router.patch('/:id', async (ctx) => {
     try {
         const id = parseInt(ctx.params.id);
         const company = await prisma.company.findUnique({ where: { id } });
@@ -82,7 +82,7 @@ router.patch('/companies/:id', async (ctx) => {
 });
 
 // Delete Company
-router.delete('/companies/:id', async (ctx) => {
+router.delete('/:id', async (ctx) => {
     try {
         const id = parseInt(ctx.params.id);
         await prisma.company.delete({ where: { id } });
@@ -94,7 +94,7 @@ router.delete('/companies/:id', async (ctx) => {
 });
 
 // Get Company Jobs
-router.get('/companies/:id/jobs', async (ctx) => {
+router.get('/:id/jobs', async (ctx) => {
     try {
         const id = parseInt(ctx.params.id);
         const company = await prisma.company.findUnique({ where: { id } });

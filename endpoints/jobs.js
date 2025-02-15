@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 
 // Create Job
-router.post('/jobs', async (ctx) => {
+router.post('/', async (ctx) => {
     try {
         const job = await prisma.job.create({
             data: {
@@ -28,7 +28,7 @@ router.post('/jobs', async (ctx) => {
 });
 
 // Get All Jobs
-router.get('/jobs', async (ctx) => {
+router.get('', async (ctx) => {
     try {
         const jobs = await prisma.job.findMany();
         ctx.body = jobs;
@@ -40,7 +40,7 @@ router.get('/jobs', async (ctx) => {
 });
 
 // Get Job by ID
-router.get('/jobs/:id', async (ctx) => {
+router.get('/:id', async (ctx) => {
     try {
         const id = parseInt(ctx.params.id);
         const job = await prisma.job.findUnique({ where: { id } });
@@ -58,7 +58,7 @@ router.get('/jobs/:id', async (ctx) => {
 });
 
 // Update Job
-router.patch('/jobs/:id', async (ctx) => {
+router.patch('/:id', async (ctx) => {
     try {
         const id = parseInt(ctx.params.id);
         const job = await prisma.job.findUnique({ where: { id } });
@@ -89,7 +89,7 @@ router.patch('/jobs/:id', async (ctx) => {
 });
 
 // Delete Job
-router.delete('/jobs/:id', async (ctx) => {
+router.delete('/:id', async (ctx) => {
     try {
         const id = parseInt(ctx.params.id);
         await prisma.job.delete({ where: { id } });
@@ -101,7 +101,7 @@ router.delete('/jobs/:id', async (ctx) => {
 });
 
 // Get Open Jobs
-router.get('/jobs/open', async (ctx) => {
+router.get('/open', async (ctx) => {
     try {
         const jobs = await prisma.job.findMany({ where: { isOpen: true } });
         ctx.body = jobs;
@@ -113,7 +113,7 @@ router.get('/jobs/open', async (ctx) => {
 });
 
 // Get Closed Jobs
-router.get('/jobs/closed', async (ctx) => {
+router.get('/closed', async (ctx) => {
     try {
         const jobs = await prisma.job.findMany({ where: { isOpen: false } });
         ctx.body = jobs;
