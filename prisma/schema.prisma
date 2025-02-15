@@ -14,18 +14,19 @@ datasource db {
 }
 
 model Job {
-  id        Int      @id @default(autoincrement())
-  title     String
-  companyId Int
-  company   Company  @relation(fields: [companyId], references: [id])
-  location  String
-  minSalary Decimal
-  maxSalary Decimal
-  imageUri  String
-  postDate  DateTime
-  isOpen    Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  title       String
+  companyId   Int
+  company     Company  @relation(fields: [companyId], references: [id])
+  description String
+  location    String
+  minSalary   Decimal
+  maxSalary   Decimal
+  imageUri    String
+  postDate    DateTime
+  isOpen      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   JobApplication JobApplication[]
 }
