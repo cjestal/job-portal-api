@@ -4,44 +4,124 @@ const router = new Router({ prefix: '/jobs' });
 const prisma = new PrismaClient();
 
 
-// Get all jobs
-router.get('/', async (ctx) => {
-    const jobs = await prisma.job.findMany();
-    ctx.body = jobs;
-});
-
-// Get a single job by ID
-router.get('/:id', async (ctx) => {
-    const id = ctx.params.id;
-    const job = await prisma.job.findUnique({ where: { id: Number(id) } });
-    if (!job) {
-        ctx.status = 404;
-        ctx.body = { message: 'Job not found' };
-    } else {
+// Create Job
+router.post('/jobs', async (ctx) => {
+    try {
+        const job = await prisma.job.create({
+            data: {
+                title: ctx.request.body.title,
+                companyId: ctx.request.body.companyId,
+                location: ctx.request.body.location,
+                minSalary: ctx.request.body.minSalary,
+                maxSalary: ctx.request.body.maxSalary,
+                imageUri: ctx.request.body.imageUri,
+                postDate: ctx.request.body.postDate,
+                isOpen: ctx.request.body.isOpen,
+            },
+        });
         ctx.body = job;
+        ctx.status = 201;
+    } catch (error) {
+        ctx.status = 400;
+        ctx.body = { error: error.message };
     }
 });
 
-// Create a new job
-router.post('/', async (ctx) => {
-    const { title, description, requirements, companyId } = ctx.request.body;
-    const job = await prisma.job.create({ data: { title, description, requirements, companyId: Number(companyId) } });
-    ctx.body = job;
+// Get All Jobs
+router.get('/jobs', async (ctx) => {
+    try {
+        const jobs = await prisma.job.findMany();
+        ctx.body = jobs;
+        ctx.status = 200;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
 });
 
-// Update an existing job by ID
-router.put('/:id', async (ctx) => {
-    const id = ctx.params.id;
-    const { title, description, requirements, companyId } = ctx.request.body;
-    const job = await prisma.job.update({ where: { id: Number(id) }, data: { title, description, requirements, companyId: Number(companyId) } });
-    ctx.body = job;
+// Get Job by ID
+router.get('/jobs/:id', async (ctx) => {
+    try {
+        const id = parseInt(ctx.params.id);
+        const job = await prisma.job.findUnique({ where: { id } });
+        if (!job) {
+            ctx.status = 404;
+            ctx.body = { error: 'Job not found' };
+        } else {
+            ctx.body = job;
+            ctx.status = 200;
+        }
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
 });
 
-// Delete a job by ID
-router.delete('/:id', async (ctx) => {
-    const id = ctx.params.id;
-    await prisma.job.delete({ where: { id: Number(id) } });
-    ctx.status = 204;
+// Update Job
+router.patch('/jobs/:id', async (ctx) => {
+    try {
+        const id = parseInt(ctx.params.id);
+        const job = await prisma.job.findUnique({ where: { id } });
+        if (!job) {
+            ctx.status = 404;
+            ctx.body = { error: 'Job not found' };
+        } else {
+            const updatedJob = await prisma.job.update({
+                where: { id },
+                data: {
+                    title: ctx.request.body.title,
+                    companyId: ctx.request.body.companyId,
+                    location: ctx.request.body.location,
+                    minSalary: ctx.request.body.minSalary,
+                    maxSalary: ctx.request.body.maxSalary,
+                    imageUri: ctx.request.body.imageUri,
+                    postDate: ctx.request.body.postDate,
+                    isOpen: ctx.request.body.isOpen,
+                },
+            });
+            ctx.body = updatedJob;
+            ctx.status = 200;
+        }
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
+});
+
+// Delete Job
+router.delete('/jobs/:id', async (ctx) => {
+    try {
+        const id = parseInt(ctx.params.id);
+        await prisma.job.delete({ where: { id } });
+        ctx.status = 204;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
+});
+
+// Get Open Jobs
+router.get('/jobs/open', async (ctx) => {
+    try {
+        const jobs = await prisma.job.findMany({ where: { isOpen: true } });
+        ctx.body = jobs;
+        ctx.status = 200;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
+});
+
+// Get Closed Jobs
+router.get('/jobs/closed', async (ctx) => {
+    try {
+        const jobs = await prisma.job.findMany({ where: { isOpen: false } });
+        ctx.body = jobs;
+        ctx.status = 200;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
 });
 
 module.exports = router;

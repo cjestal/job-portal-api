@@ -3,44 +3,103 @@ const Router = require('koa-router');
 const router = new Router({ prefix: '/users' });
 const prisma = new PrismaClient();
 
-// Get all users
-router.get('/', async (ctx) => {
-    const users = await prisma.user.findMany();
-    ctx.body = users;
-});
-
-// Get a single user by ID
-router.get('/:id', async (ctx) => {
-    const id = ctx.params.id;
-    const user = await prisma.user.findUnique({ where: { id: Number(id) } });
-    if (!user) {
-        ctx.status = 404;
-        ctx.body = { message: 'User not found' };
-    } else {
+// Create User
+router.post('/users', async (ctx) => {
+    try {
+        const user = await prisma.user.create({
+            data: {
+                name: ctx.request.body.name,
+                email: ctx.request.body.email,
+                password: ctx.request.body.password,
+            },
+        });
         ctx.body = user;
+        ctx.status = 201;
+    } catch (error) {
+        ctx.status = 400;
+        ctx.body = { error: error.message };
     }
 });
 
-// Create a new user
-router.post('/', async (ctx) => {
-    const { name, email, phone, password } = ctx.request.body;
-    const user = await prisma.user.create({ data: { name, email, phone, password } });
-    ctx.body = user;
+// Get All Users
+router.get('/users', async (ctx) => {
+    try {
+        const users = await prisma.user.findMany();
+        ctx.body = users;
+        ctx.status = 200;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
 });
 
-// Update an existing user by ID
-router.put('/:id', async (ctx) => {
-    const id = ctx.params.id;
-    const { name, email, phone, password } = ctx.request.body;
-    const user = await prisma.user.update({ where: { id: Number(id) }, data: { name, email, phone, password } });
-    ctx.body = user;
+// Get User by ID
+router.get('/users/:id', async (ctx) => {
+    try {
+        const id = parseInt(ctx.params.id);
+        const user = await prisma.user.findUnique({ where: { id } });
+        if (!user) {
+            ctx.status = 404;
+            ctx.body = { error: 'User not found' };
+        } else {
+            ctx.body = user;
+            ctx.status = 200;
+        }
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
 });
 
-// Delete a user by ID
-router.delete('/:id', async (ctx) => {
-    const id = ctx.params.id;
-    await prisma.user.delete({ where: { id: Number(id) } });
-    ctx.status = 204;
+// Update User
+router.patch('/users/:id', async (ctx) => {
+    try {
+        const id = parseInt(ctx.params.id);
+        const user = await prisma.user.findUnique({ where: { id } });
+        if (!user) {
+            ctx.status = 404;
+            ctx.body = { error: 'User not found' };
+        } else {
+            const updatedUser = await prisma.user.update({
+                where: { id },
+                data: {
+                    name: ctx.request.body.name,
+                    email: ctx.request.body.email,
+                    password: ctx.request.body.password,
+                },
+            });
+            ctx.body = updatedUser;
+            ctx.status = 200;
+        }
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
+});
+
+// Delete User
+router.delete('/users/:id', async (ctx) => {
+    try {
+        const id = parseInt(ctx.params.id);
+        await prisma.user.delete({ where: { id } });
+        ctx.status = 204;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
+});
+
+// Get User Applications
+router.get('/users/:id/applications', async (ctx) => {
+    try {
+        const id = parseInt(ctx.params.id);
+        const applications = await prisma.jobApplication.findMany({ where: { userId: id } });
+        ctx.body = applications;
+        ctx.status = 200;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
 });
 
 module.exports = router;

@@ -14,14 +14,18 @@ datasource db {
 }
 
 model Job {
-  id           Int      @id @default(autoincrement())
-  title        String
-  description  String
-  requirements String
-  companyId    Int
-  company      Company  @relation(fields: [companyId], references: [id])
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  title     String
+  companyId Int
+  company   Company  @relation(fields: [companyId], references: [id])
+  location  String
+  minSalary Decimal
+  maxSalary Decimal
+  imageUri  String
+  postDate  DateTime
+  isOpen    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   JobApplication JobApplication[]
 }
@@ -34,6 +38,7 @@ enum UserType {
 model User {
   id              Int              @id @default(autoincrement())
   name            String
+  codeName        String
   email           String
   phone           String
   password        String
@@ -46,16 +51,16 @@ model User {
 }
 
 model Company {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String
-  phone     String
-  address   String
-  jobs      Job[]
-  user      User?
-  userId    Int?     @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  name        String
+  location    String
+  logoUrl     String
+  description String
+  highlights  String
+  jobs        Job[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  User        User?
 }
 
 model JobApplication {

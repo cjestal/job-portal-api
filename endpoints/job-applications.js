@@ -3,44 +3,120 @@ const Router = require('koa-router');
 const router = new Router({ prefix: '/job-applications' });
 const prisma = new PrismaClient();
 
-// Get all job applications
-router.get('/', async (ctx) => {
-    const jobApplications = await prisma.jobApplication.findMany();
-    ctx.body = jobApplications;
-});
-
-// Get a single job application by ID
-router.get('/:id', async (ctx) => {
-    const id = ctx.params.id;
-    const jobApplication = await prisma.jobApplication.findUnique({ where: { id: Number(id) } });
-    if (!jobApplication) {
-        ctx.status = 404;
-        ctx.body = { message: 'Job application not found' };
-    } else {
+// Create Job Application
+router.post('/job-applications', async (ctx) => {
+    try {
+        const jobApplication = await prisma.jobApplication.create({
+            data: {
+                jobId: ctx.request.body.jobId,
+                userId: ctx.request.body.userId,
+                resume: ctx.request.body.resume,
+                coverLetter: ctx.request.body.coverLetter,
+                status: ctx.request.body.status,
+            },
+        });
         ctx.body = jobApplication;
+        ctx.status = 201;
+    } catch (error) {
+        ctx.status = 400;
+        ctx.body = { error: error.message };
     }
 });
 
-// Create a new job application
-router.post('/', async (ctx) => {
-    const { jobId, userId, resume, coverLetter } = ctx.request.body;
-    const jobApplication = await prisma.jobApplication.create({ data: { jobId: Number(jobId), userId: Number(userId), resume, coverLetter } });
-    ctx.body = jobApplication;
+// Get All Job Applications
+router.get('/job-applications', async (ctx) => {
+    try {
+        const jobApplications = await prisma.jobApplication.findMany();
+        ctx.body = jobApplications;
+        ctx.status = 200;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
 });
 
-// Update an existing job application by ID
-router.put('/:id', async (ctx) => {
-    const id = ctx.params.id;
-    const { jobId, userId, resume, coverLetter } = ctx.request.body;
-    const jobApplication = await prisma.jobApplication.update({ where: { id: Number(id) }, data: { jobId: Number(jobId), userId: Number(userId), resume, coverLetter } });
-    ctx.body = jobApplication;
+// Get Job Application by ID
+router.get('/job-applications/:id', async (ctx) => {
+    try {
+        const id = parseInt(ctx.params.id);
+        const jobApplication = await prisma.jobApplication.findUnique({ where: { id } });
+        if (!jobApplication) {
+            ctx.status = 404;
+            ctx.body = { error: 'Job Application not found' };
+        } else {
+            ctx.body = jobApplication;
+            ctx.status = 200;
+        }
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
 });
 
-// Delete a job application by ID
-router.delete('/:id', async (ctx) => {
-    const id = ctx.params.id;
-    await prisma.jobApplication.delete({ where: { id: Number(id) } });
-    ctx.status = 204;
+// Update Job Application
+router.patch('/job-applications/:id', async (ctx) => {
+    try {
+        const id = parseInt(ctx.params.id);
+        const jobApplication = await prisma.jobApplication.findUnique({ where: { id } });
+        if (!jobApplication) {
+            ctx.status = 404;
+            ctx.body = { error: 'Job Application not found' };
+        } else {
+            const updatedJobApplication = await prisma.jobApplication.update({
+                where: { id },
+                data: {
+                    jobId: ctx.request.body.jobId,
+                    userId: ctx.request.body.userId,
+                    resume: ctx.request.body.resume,
+                    coverLetter: ctx.request.body.coverLetter,
+                    status: ctx.request.body.status,
+                },
+            });
+            ctx.body = updatedJobApplication;
+            ctx.status = 200;
+        }
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
+});
+
+// Delete Job Application
+router.delete('/job-applications/:id', async (ctx) => {
+    try {
+        const id = parseInt(ctx.params.id);
+        await prisma.jobApplication.delete({ where: { id } });
+        ctx.status = 204;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
+});
+
+// Get Job Applications by Job ID
+router.get('/jobs/:jobId/applications', async (ctx) => {
+    try {
+        const jobId = parseInt(ctx.params.jobId);
+        const jobApplications = await prisma.jobApplication.findMany({ where: { jobId } });
+        ctx.body = jobApplications;
+        ctx.status = 200;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
+});
+
+// Get Job Applications by User ID
+router.get('/users/:userId/applications', async (ctx) => {
+    try {
+        const userId = parseInt(ctx.params.userId);
+        const jobApplications = await prisma.jobApplication.findMany({ where: { userId } });
+        ctx.body = jobApplications;
+        ctx.status = 200;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
 });
 
 module.exports = router;
