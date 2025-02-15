@@ -5,25 +5,37 @@ async function main() {
     // Create users
     const user1 = await prisma.user.create({
         data: {
-          name: 'John Doe',
-          codeName: 'fluffyBunny123',
-          email: 'johndoe@example.com',
-          phone: '123-456-7890',
-          password: 'password123',
-          type: 'INDIVIDUAL',
+            name: 'John Doe',
+            codeName: 'johndoe123',
+            email: 'johndoe@example.com',
+            phone: '123-456-7890',
+            password: 'password123',
+            type: 'INDIVIDUAL',
         },
-      });
-    
-      const user2 = await prisma.user.create({
+    });
+
+    const user2 = await prisma.user.create({
         data: {
-          name: 'Jane Doe',
-          codeName: 'wackyPenguin123',
-          email: 'janedoe@example.com',
-          phone: '987-654-3210',
-          password: 'password123',
-          type: 'INDIVIDUAL',
+            name: 'Jane Doe',
+            codeName: 'janedoe123',
+            email: 'janedoe@example.com',
+            phone: '987-654-3210',
+            password: 'password123',
+            type: 'INDIVIDUAL',
         },
-      });
+    });
+
+    const user3 = await prisma.user.create({
+        data: {
+            name: 'Company Admin',
+            codeName: 'companyadmin123',
+            email: 'companyadmin@example.com',
+            phone: '555-123-4567',
+            password: 'password123',
+            type: 'COMPANY',
+            companyId: 1,
+        },
+    });
 
     // Create companies
     const company1 = await prisma.company.create({
@@ -33,28 +45,6 @@ async function main() {
             logoUrl: 'https://example.com/company-a-logo.png',
             description: 'Company A is a leading tech firm.',
             highlights: 'Competitive salary, flexible work hours, opportunities for growth.',
-            jobs: {
-                create: [
-                    {
-                        title: 'Software Engineer',
-                        location: 'New York',
-                        minSalary: 80000.00,
-                        maxSalary: 120000.00,
-                        imageUri: 'https://example.com/software-engineer-image.jpg',
-                        postDate: new Date('2022-01-01'),
-                        isOpen: true,
-                    },
-                    {
-                        title: 'Data Scientist',
-                        location: 'New York',
-                        minSalary: 100000.00,
-                        maxSalary: 150000.00,
-                        imageUri: 'https://example.com/data-scientist-image.jpg',
-                        postDate: new Date('2022-02-01'),
-                        isOpen: true,
-                    },
-                ],
-            },
         },
     });
 
@@ -65,26 +55,53 @@ async function main() {
             logoUrl: 'https://example.com/company-b-logo.png',
             description: 'Company B is a leading fintech firm.',
             highlights: 'Competitive salary, flexible work hours, opportunities for growth.',
-            jobs: {
-                create: [
-                    {
-                        title: 'Product Manager',
-                        location: 'San Francisco',
-                        minSalary: 120000.00,
-                        maxSalary: 180000.00,
-                        imageUri: 'https://example.com/product-manager-image.jpg',
-                        postDate: new Date('2022-03-01'),
-                        isOpen: true,
-                    },
-                ],
-            },
+        },
+    });
+
+    // Create jobs
+    const job1 = await prisma.job.create({
+        data: {
+            title: 'Software Engineer',
+            location: 'New York',
+            minSalary: 80000.00,
+            maxSalary: 120000.00,
+            imageUri: 'https://example.com/software-engineer-image.jpg',
+            postDate: new Date('2022-01-01'),
+            isOpen: true,
+            companyId: company1.id,
+        },
+    });
+
+    const job2 = await prisma.job.create({
+        data: {
+            title: 'Data Scientist',
+            location: 'New York',
+            minSalary: 100000.00,
+            maxSalary: 150000.00,
+            imageUri: 'https://example.com/data-scientist-image.jpg',
+            postDate: new Date('2022-02-01'),
+            isOpen: true,
+            companyId: company1.id,
+        },
+    });
+
+    const job3 = await prisma.job.create({
+        data: {
+            title: 'Product Manager',
+            location: 'San Francisco',
+            minSalary: 120000.00,
+            maxSalary: 180000.00,
+            imageUri: 'https://example.com/product-manager-image.jpg',
+            postDate: new Date('2022-03-01'),
+            isOpen: true,
+            companyId: company2.id,
         },
     });
 
     // Create job applications
     await prisma.jobApplication.create({
         data: {
-            jobId: company1.jobs[0].id,
+            jobId: job1.id,
             userId: user1.id,
             resume: 'Resume for John Doe',
             coverLetter: 'Cover letter for John Doe',
@@ -94,7 +111,7 @@ async function main() {
 
     await prisma.jobApplication.create({
         data: {
-            jobId: company1.jobs[1].id,
+            jobId: job2.id,
             userId: user2.id,
             resume: 'Resume for Jane Doe',
             coverLetter: 'Cover letter for Jane Doe',
