@@ -56,6 +56,7 @@ async function main() {
             imageUri: 'https://example.com/software-engineer-image.jpg',
             postDate: new Date('2022-01-01'),
             isOpen: true,
+            description: 'Develop software applications',
             companyId: company1.id,
         },
     });
@@ -69,6 +70,7 @@ async function main() {
             imageUri: 'https://example.com/data-scientist-image.jpg',
             postDate: new Date('2022-02-01'),
             isOpen: true,
+            description: 'Analyze data and develop models',
             companyId: company1.id,
         },
     });
@@ -82,6 +84,7 @@ async function main() {
             imageUri: 'https://example.com/product-manager-image.jpg',
             postDate: new Date('2022-03-01'),
             isOpen: true,
+            description: 'Manage product development lifecycle',
             companyId: company2.id,
         },
     });
