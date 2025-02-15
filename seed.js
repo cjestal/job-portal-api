@@ -25,18 +25,6 @@ async function main() {
         },
     });
 
-    const user3 = await prisma.user.create({
-        data: {
-            name: 'Company Admin',
-            codeName: 'companyadmin123',
-            email: 'companyadmin@example.com',
-            phone: '555-123-4567',
-            password: 'password123',
-            type: 'COMPANY',
-            companyId: 1,
-        },
-    });
-
     // Create companies
     const company1 = await prisma.company.create({
         data: {
