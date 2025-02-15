@@ -28,7 +28,7 @@ router.post('/', async (ctx) => {
 });
 
 // Get All Jobs
-router.get('', async (ctx) => {
+router.get('/', async (ctx) => {
     try {
         const jobs = await prisma.job.findMany();
         ctx.body = jobs;
