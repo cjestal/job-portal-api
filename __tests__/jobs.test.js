@@ -3,10 +3,10 @@ const prisma = new PrismaClient();
 const request = require('supertest');
 const app = require('../index'); // Import your Koa app instance
 
-describe('User Endpoints', () => {
+describe('Job Endpoints', () => {
 
     beforeEach(async () => {
-        await prisma.user.deleteMany(); // Clear the users table before each test
+        await prisma.job.deleteMany(); // Clear the users table before each test
         await prisma.job.create({
             data: {
                 title: 'Software Engineer',
