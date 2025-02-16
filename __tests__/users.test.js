@@ -49,7 +49,7 @@ describe('User Endpoints', () => {
                     phone: '123-456-7890',
                     password: 'password123',
                     codeName: 'johndoe123',
-                    type: 'USER', // Assuming 'USER' is a valid UserType
+                    type: 'INDIVIDUAL', // Assuming 'USER' is a valid UserType
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
@@ -73,7 +73,7 @@ describe('User Endpoints', () => {
                     phone: '123-456-7890',
                     password: 'password123',
                     codeName: 'johndoe123',
-                    type: 'USER', // Assuming 'USER' is a valid UserType
+                    type: 'INDIVIDUAL', // Assuming 'USER' is a valid UserType
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
@@ -105,7 +105,7 @@ describe('User Endpoints', () => {
                     phone: '123-456-7890',
                     password: 'password123',
                     codeName: 'johndoe123',
-                    type: 'USER', // Assuming 'USER' is a valid UserType
+                    type: 'INDIVIDUAL', // Assuming 'USER' is a valid UserType
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
@@ -141,7 +141,7 @@ describe('User Endpoints', () => {
                     phone: '123-456-7890',
                     password: 'password123',
                     codeName: 'johndoe123',
-                    type: 'USER', // Assuming 'USER' is a valid UserType
+                    type: 'INDIVIDUAL', // Assuming 'USER' is a valid UserType
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
@@ -169,7 +169,7 @@ describe('User Endpoints', () => {
                     phone: '123-456-7890',
                     password: 'password123',
                     codeName: 'johndoe123',
-                    type: 'USER', // Assuming 'USER' is a valid UserType
+                    type: 'INDIVIDUAL', // Assuming 'USER' is a valid UserType
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
@@ -206,7 +206,7 @@ describe('User Endpoints', () => {
                     phone: '123-456-7890',
                     password: 'password123',
                     codeName: 'johndoe123',
-                    type: 'USER', // Assuming 'USER' is a valid UserType
+                    type: 'INDIVIDUAL', // Assuming 'USER' is a valid UserType
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
