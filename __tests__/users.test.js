@@ -2,9 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const request = require('supertest');
 const app = require('../index');
-const server = require('http');
 
-const server = http.createServer(app.callback());
 
 describe('User Endpoints', () => {
     beforeEach(async () => {
@@ -13,19 +11,19 @@ describe('User Endpoints', () => {
 
     afterAll(async () => {
         await prisma.$disconnect(); // Disconnect from the database after all tests
-        server.close(); // Close the server after all tests
+
     });
 
     describe('POST /', () => {
         it('should create a new user', async () => {
-            const response = await request(app).post('/users').send(data: {
+            const response = await request(app).post('/users').send({
                 name: 'John Doe',
                 email: 'johndoe@example.com',
                 phone: '123-456-7890',
                 password: 'password123',
                 codeName: 'johndoe123',
                 type: 'INDIVIDUAL', // Assuming 'USER' is a valid UserType
-            },);
+            });
 
             expect(response.status).toBe(201);
             expect(response.body).toHaveProperty('id');
