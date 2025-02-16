@@ -16,6 +16,7 @@ beforeEach(async () => {
 
 afterEach(async () => {
     await prisma.job.deleteMany();
+    await prisma.$disconnect(); // Disconnect from the database after all tests
 });
 
 describe('GET /jobs', () => {

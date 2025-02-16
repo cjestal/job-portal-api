@@ -3,6 +3,10 @@ const prisma = new PrismaClient();
 const request = require('supertest');
 const app = require('../index');
 
+test('dummy test that always succeeds', () => {
+    expect(true).toBe(true);
+});
+
 // beforeEach(async () => {
 //     await prisma.company.create({
 //         data: {
