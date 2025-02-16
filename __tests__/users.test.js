@@ -18,12 +18,14 @@ describe('User Endpoints', () => {
                 name: 'John Doe',
                 email: 'johndoe@example.com',
                 password: 'password123',
+                codeName: 'johndoe123',
             });
 
             expect(response.status).toBe(201);
             expect(response.body).toHaveProperty('id');
             expect(response.body).toHaveProperty('name', 'John Doe');
             expect(response.body).toHaveProperty('email', 'johndoe@example.com');
+            expect(response.body).toHaveProperty('codeName', 'johndoe123');
         });
 
         it('should return an error for invalid data', async () => {
@@ -45,6 +47,7 @@ describe('User Endpoints', () => {
                     name: 'John Doe',
                     email: 'johndoe@example.com',
                     password: 'password123',
+                    codeName: 'johndoe123',
                 },
             });
 
@@ -53,6 +56,7 @@ describe('User Endpoints', () => {
             expect(response.status).toBe(200);
             expect(response.body).toBeInstanceOf(Array);
             expect(response.body).toHaveLength(1);
+            expect(response.body[0]).toHaveProperty('codeName', 'johndoe123');
         });
     });
 
@@ -63,6 +67,7 @@ describe('User Endpoints', () => {
                     name: 'John Doe',
                     email: 'johndoe@example.com',
                     password: 'password123',
+                    codeName: 'johndoe123',
                 },
             });
 
@@ -72,6 +77,7 @@ describe('User Endpoints', () => {
             expect(response.body).toHaveProperty('id', user.id);
             expect(response.body).toHaveProperty('name', 'John Doe');
             expect(response.body).toHaveProperty('email', 'johndoe@example.com');
+            expect(response.body).toHaveProperty('codeName', 'johndoe123');
         });
 
         it('should return a 404 error for an invalid ID', async () => {
@@ -89,17 +95,20 @@ describe('User Endpoints', () => {
                     name: 'John Doe',
                     email: 'johndoe@example.com',
                     password: 'password123',
+                    codeName: 'johndoe123',
                 },
             });
 
             const response = await request(app).patch(`/users/${user.id}`).send({
                 name: 'Jane Doe',
+                codeName: 'janedoe123',
             });
 
             expect(response.status).toBe(200);
             expect(response.body).toHaveProperty('id', user.id);
             expect(response.body).toHaveProperty('name', 'Jane Doe');
             expect(response.body).toHaveProperty('email', 'johndoe@example.com');
+            expect(response.body).toHaveProperty('codeName', 'janedoe123');
         });
 
         it('should return a 404 error for an invalid ID', async () => {
@@ -111,7 +120,6 @@ describe('User Endpoints', () => {
             expect(response.body).toHaveProperty('error', 'User not found');
         });
     });
-
     describe('DELETE /:id', () => {
         it('should delete a user', async () => {
             const user = await prisma.user.create({
@@ -119,6 +127,7 @@ describe('User Endpoints', () => {
                     name: 'John Doe',
                     email: 'johndoe@example.com',
                     password: 'password123',
+                    codeName: 'johndoe123',
                 },
             });
 
@@ -142,6 +151,7 @@ describe('User Endpoints', () => {
                     name: 'John Doe',
                     email: 'johndoe@example.com',
                     password: 'password123',
+                    codeName: 'johndoe123',
                 },
             });
 
@@ -174,6 +184,7 @@ describe('User Endpoints', () => {
                     name: 'John Doe',
                     email: 'johndoe@example.com',
                     password: 'password123',
+                    codeName: 'johndoe123',
                 },
             });
 
