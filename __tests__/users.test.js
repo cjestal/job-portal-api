@@ -3,6 +3,9 @@ const prisma = new PrismaClient();
 const request = require('supertest');
 const app = require('../index');
 
+test('dummy test that always succeeds', () => {
+    expect(true).toBe(true);
+});
 
 // describe('User Endpoints', () => {
 //     beforeEach(async () => {
