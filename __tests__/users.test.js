@@ -9,24 +9,6 @@ const app = require('../index'); // Import your Koa app instance
 // });
 
 describe('User Endpoints', () => {
-    let server;
-
-    beforeAll(async () => {
-        server = http.createServer(app.callback());
-        await new Promise((resolve, reject) => {
-            server.listen(0, (err) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve();
-                }
-            });
-        });
-    });
-
-    afterAll(async () => {
-        server.close();
-    });
 
     beforeEach(async () => {
         await prisma.user.deleteMany(); // Clear the users table before each test
