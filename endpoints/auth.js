@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const Router = require('koa-router');
 // const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 const router = new Router({ prefix: '/auth' });
 const prisma = new PrismaClient();
 
