@@ -129,4 +129,19 @@ router.get('/closed', async (ctx) => {
     }
 });
 
+// Get Applicants for a Job
+router.get('/:id/applicants', async (ctx) => {
+    try {
+        const id = parseInt(ctx.params.id);
+        const applicants = await prisma.applicant.findMany({
+            where: { jobId: id },
+        });
+        ctx.body = applicants;
+        ctx.status = 200;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
+});
+
 module.exports = router;
