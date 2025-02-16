@@ -138,3 +138,5 @@ router.get('/settings', async (ctx) => {
         phone: user.phone,
     };
 });
+
+module.exports = router;
