@@ -7,4 +7,5 @@ module.exports = {
     moduleFileExtensions: ['js', 'json', 'node'],
     // The root of your source code
     roots: ['<rootDir>'],
+    globalSetup: './globalSetup.js',
 };
