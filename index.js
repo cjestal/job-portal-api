@@ -26,10 +26,11 @@ app.use(jobsRouter.routes()).use(jobsRouter.allowedMethods());
 app.use(jobApplicationsRouter.routes()).use(jobApplicationsRouter.allowedMethods());
 app.use(authRouter.routes()).use(authRouter.allowedMethods());
 
-const port = 3000;
-app.listen(port);
-// app.listen(port, () => {
-//     console.log(`Server started on port ${port}`);
-// });
+if (require.main === module) {
+    const port = 3000;
+    app.listen(port, () => {
+        console.log(`Server listening on port ${port}`);
+    });
+}
 
 module.exports = { app }; // Export the app instance
