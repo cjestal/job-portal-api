@@ -30,7 +30,9 @@ router.post('/', async (ctx) => {
 // Get All Jobs
 router.get('/', async (ctx) => {
     try {
-        const jobs = await prisma.job.findMany();
+        const jobs = await prisma.job.findMany({
+            include: { company: true },
+        });
         ctx.body = jobs;
         ctx.status = 200;
     } catch (error) {
