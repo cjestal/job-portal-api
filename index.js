@@ -27,6 +27,7 @@ app.use(jobApplicationsRouter.routes()).use(jobApplicationsRouter.allowedMethods
 app.use(authRouter.routes()).use(authRouter.allowedMethods());
 
 const port = 3000;
-app.listen(port, () => {
-    console.log(`Server started on port ${port}`);
-});
+app.listen(port);
+// app.listen(port, () => {
+//     console.log(`Server started on port ${port}`);
+// });
