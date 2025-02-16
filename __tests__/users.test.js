@@ -8,7 +8,7 @@ describe('User Endpoints', () => {
         await prisma.user.deleteMany(); // Clear the users table before each test
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         await prisma.$disconnect(); // Disconnect from the database after all tests
     });
 
@@ -46,8 +46,12 @@ describe('User Endpoints', () => {
                 data: {
                     name: 'John Doe',
                     email: 'johndoe@example.com',
+                    phone: '123-456-7890',
                     password: 'password123',
                     codeName: 'johndoe123',
+                    type: 'USER', // Assuming 'USER' is a valid UserType
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
                 },
             });
 
@@ -66,8 +70,12 @@ describe('User Endpoints', () => {
                 data: {
                     name: 'John Doe',
                     email: 'johndoe@example.com',
+                    phone: '123-456-7890',
                     password: 'password123',
                     codeName: 'johndoe123',
+                    type: 'USER', // Assuming 'USER' is a valid UserType
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
                 },
             });
 
@@ -94,8 +102,12 @@ describe('User Endpoints', () => {
                 data: {
                     name: 'John Doe',
                     email: 'johndoe@example.com',
+                    phone: '123-456-7890',
                     password: 'password123',
                     codeName: 'johndoe123',
+                    type: 'USER', // Assuming 'USER' is a valid UserType
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
                 },
             });
 
@@ -126,8 +138,12 @@ describe('User Endpoints', () => {
                 data: {
                     name: 'John Doe',
                     email: 'johndoe@example.com',
+                    phone: '123-456-7890',
                     password: 'password123',
                     codeName: 'johndoe123',
+                    type: 'USER', // Assuming 'USER' is a valid UserType
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
                 },
             });
 
@@ -150,8 +166,12 @@ describe('User Endpoints', () => {
                 data: {
                     name: 'John Doe',
                     email: 'johndoe@example.com',
+                    phone: '123-456-7890',
                     password: 'password123',
                     codeName: 'johndoe123',
+                    type: 'USER', // Assuming 'USER' is a valid UserType
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
                 },
             });
 
@@ -183,8 +203,12 @@ describe('User Endpoints', () => {
                 data: {
                     name: 'John Doe',
                     email: 'johndoe@example.com',
+                    phone: '123-456-7890',
                     password: 'password123',
                     codeName: 'johndoe123',
+                    type: 'USER', // Assuming 'USER' is a valid UserType
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
                 },
             });
 
