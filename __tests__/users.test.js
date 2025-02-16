@@ -8,7 +8,7 @@ describe('User Endpoints', () => {
         await prisma.user.deleteMany(); // Clear the users table before each test
     });
 
-    afterAll(async () => {
+    afterEach(async () => {
         await prisma.$disconnect(); // Disconnect from the database after all tests
     });
 
