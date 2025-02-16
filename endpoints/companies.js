@@ -94,22 +94,22 @@ router.delete('/:id', async (ctx) => {
 });
 
 // Get Company Jobs
-// router.get('/:id/jobs', async (ctx) => {
-//     try {
-//         const id = parseInt(ctx.params.id);
-//         const company = await prisma.company.findUnique({ where: { id } });
-//         if (!company) {
-//             ctx.status = 404;
-//             ctx.body = { error: 'Company not found' };
-//         } else {
-//             const jobs = await prisma.job.findMany({ where: { companyId: id } });
-//             ctx.body = jobs;
-//             ctx.status = 200;
-//         }
-//     } catch (error) {
-//         ctx.status = 500;
-//         ctx.body = { error: error.message };
-//     }
-// });
+router.get('/:id/jobs', async (ctx) => {
+    try {
+        const id = parseInt(ctx.params.id);
+        const company = await prisma.company.findUnique({ where: { id } });
+        if (!company) {
+            ctx.status = 404;
+            ctx.body = { error: 'Company not found' };
+        } else {
+            const jobs = await prisma.job.findMany({ where: { companyId: id } });
+            ctx.body = jobs;
+            ctx.status = 200;
+        }
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: error.message };
+    }
+});
 
 module.exports = router;
