@@ -1,12 +1,8 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-const http = require('http');
 const request = require('supertest');
 const app = require('../index'); // Import your Koa app instance
 
-// test('dummy test that always succeeds', () => {
-//     expect(true).toBe(true);
-// });
 
 describe('User Endpoints', () => {
 
