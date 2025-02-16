@@ -102,7 +102,10 @@ router.get('/:id/jobs', async (ctx) => {
             ctx.status = 404;
             ctx.body = { error: 'Company not found' };
         } else {
-            const jobs = await prisma.job.findMany({ where: { companyId: id } });
+            const jobs = await prisma.job.findMany({
+                where: { companyId: id },
+                include: { company: true },
+            });
             ctx.body = jobs;
             ctx.status = 200;
         }

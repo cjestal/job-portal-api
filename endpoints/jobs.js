@@ -43,7 +43,12 @@ router.get('/', async (ctx) => {
 router.get('/:id', async (ctx) => {
     try {
         const id = parseInt(ctx.params.id);
-        const job = await prisma.job.findUnique({ where: { id } });
+        const job = await prisma.job.findUnique({
+            where: { id },
+            include: {
+                company: true,
+            },
+        });
         if (!job) {
             ctx.status = 404;
             ctx.body = { error: 'Job not found' };
