@@ -3,28 +3,28 @@ const prisma = new PrismaClient();
 const request = require('supertest');
 const app = require('../index');
 
-// beforeEach(async () => {
-//     await prisma.job.create({
-//         data: {
-//             title: 'Software Engineer',
-//             description: 'Develop software applications',
-//             requirements: 'Bachelor\'s degree in Computer Science',
-//             companyId: 1,
-//         },
-//     });
-// });
+beforeEach(async () => {
+    await prisma.job.create({
+        data: {
+            title: 'Software Engineer',
+            description: 'Develop software applications',
+            requirements: 'Bachelor\'s degree in Computer Science',
+            companyId: 1,
+        },
+    });
+});
 
-// afterEach(async () => {
-//     await prisma.job.deleteMany();
-// });
+afterEach(async () => {
+    await prisma.job.deleteMany();
+});
 
-// describe('GET /jobs', () => {
-//     it('should return a list of jobs', async () => {
-//         const response = await request(app).get('/jobs');
-//         expect(response.status).toBe(200);
-//         expect(response.body).toBeInstanceOf(Array);
-//     });
-// });
+describe('GET /jobs', () => {
+    it('should return a list of jobs', async () => {
+        const response = await request(app).get('/jobs');
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Array);
+    });
+});
 
 // describe('GET /jobs/:id', () => {
 //     it('should return a job by ID', async () => {
