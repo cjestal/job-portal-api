@@ -16,7 +16,7 @@ describe('User Endpoints', () => {
 
     afterAll(async () => {
         await prisma.$disconnect(); // Disconnect from the database after all tests
-
+        app.close(); // Close the Koa server after all tests
     });
 
     describe('POST /', () => {
