@@ -7,6 +7,7 @@ const jobsRouter = require('./endpoints/jobs');
 const jobApplicationsRouter = require('./endpoints/job-applications');
 const authRouter = require('./endpoints/auth');
 const accountRouter = require('./endpoints/account');
+const postsRouter = require('./endpoints/posts');
 
 const app = new Koa();
 
@@ -27,5 +28,6 @@ app.use(jobsRouter.routes()).use(jobsRouter.allowedMethods());
 app.use(jobApplicationsRouter.routes()).use(jobApplicationsRouter.allowedMethods());
 app.use(authRouter.routes()).use(authRouter.allowedMethods());
 app.use(accountRouter.routes()).use(accountRouter.allowedMethods());
+app.use(postsRouter.routes()).use(postsRouter.allowedMethods());
 
 module.exports = app.listen(3000);

@@ -49,6 +49,8 @@ model User {
   companyId       Int?             @unique
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
+
+  UserPost UserPost[]
 }
 
 model Company {
@@ -75,4 +77,15 @@ model JobApplication {
   status      String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model UserPost {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  title     String
+  content   String
+  imageUri  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
