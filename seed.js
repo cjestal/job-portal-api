@@ -10,6 +10,7 @@ async function main() {
             email: 'johndoe@example.com',
             phone: '123-456-7890',
             password: 'password123',
+            token: '',
             type: 'INDIVIDUAL',
         },
     });
@@ -21,6 +22,7 @@ async function main() {
             email: 'janedoe@example.com',
             phone: '987-654-3210',
             password: 'password123',
+            token: '',
             type: 'INDIVIDUAL',
         },
     });
