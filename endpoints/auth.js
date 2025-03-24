@@ -12,7 +12,7 @@ router.post('/login', async (ctx) => {
         // throw new Error(ctx.request);
         ctx.status = 200;
         ctx.body = { email, password };
-        const user = await prisma.user.findUnique({ where: { email } });
+        // const user = await prisma.user.findUnique({ where: { email } });
         // if (!user || !(await bcrypt.compare(password, user.password))) {
         //     ctx.status = 401;
         //     ctx.body = { error: 'Invalid email or password' };
