@@ -10,17 +10,18 @@ router.post('/login', async (ctx) => {
     try {
         const { email, password } = ctx.request.body;
         const user = await prisma.user.findUnique({ where: { email } });
-        if (!user || !(await bcrypt.compare(password, user.password))) {
-            ctx.status = 401;
-            ctx.body = { error: 'Invalid email or password' };
-        } else {
-            // const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-            //     expiresIn: '1h',
-            // });
-            // ctx.body = { token, user };
-            ctx.body = { user };
-            ctx.status = 200;
-        }
+        ctx.body = user;
+        // if (!user || !(await bcrypt.compare(password, user.password))) {
+        //     ctx.status = 401;
+        //     ctx.body = { error: 'Invalid email or password' };
+        // } else {
+        //     // const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+        //     //     expiresIn: '1h',
+        //     // });
+        //     // ctx.body = { token, user };
+        //     ctx.body = { user };
+        //     ctx.status = 200;
+        // }
     } catch (error) {
         ctx.status = 500;
         ctx.body = { error: error.message };
