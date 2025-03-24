@@ -14,7 +14,7 @@ router.post('/login', async (ctx) => {
         if (!user) {
             ctx.status = 401;
             ctx.body = { error: 'Invalid email' };
-        } else if (!(await bcrypt.compare(password, user.password))) {
+        } else if (password !== user.password) {
             ctx.status = 401;
             ctx.body = { error: 'Invalid password' };
         }
