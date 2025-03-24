@@ -39,8 +39,8 @@ enum UserType {
 model User {
   id              Int              @id @default(autoincrement())
   name            String
-  codeName        String
-  email           String
+  codeName        String           @unique
+  email           String           @unique
   phone           String
   password        String
   jobApplications JobApplication[]
@@ -69,9 +69,9 @@ model Company {
 model JobApplication {
   id          Int      @id @default(autoincrement())
   job         Job      @relation(fields: [jobId], references: [id])
-  jobId       Int
+  jobId       Int      @unique
   user        User     @relation(fields: [userId], references: [id])
-  userId      Int
+  userId      Int      @unique
   resume      String
   coverLetter String
   status      String
@@ -82,7 +82,7 @@ model JobApplication {
 model UserPost {
   id        Int      @id @default(autoincrement())
   user      User     @relation(fields: [userId], references: [id])
-  userId    Int
+  userId    Int      @unique
   title     String
   content   String
   imageUri  String
