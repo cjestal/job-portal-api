@@ -9,6 +9,7 @@ const prisma = new PrismaClient();
 router.post('/login', async (ctx) => {
     try {
         const { email, password } = ctx.request.body;
+        if(email == null) throw new Error('Email undefined');
         // ctx.status = 200;
         // ctx.body = { email, password };
         const user = await prisma.user.findUnique({ where: { email } });
