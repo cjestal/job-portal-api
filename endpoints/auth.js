@@ -10,7 +10,7 @@ router.post('/login', async (ctx) => {
     try {
         const { email, password } = ctx.request.body;
         const user = await prisma.user.findUnique({ where: { email } });
-        ctx.body = user;
+        
         if (!user) {
             ctx.status = 401;
             ctx.body = { error: 'Invalid email' };
@@ -18,14 +18,15 @@ router.post('/login', async (ctx) => {
             ctx.status = 401;
             ctx.body = { error: 'Invalid password' };
         }
-        // else {
-        //     // const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-        //     //     expiresIn: '1h',
-        //     // });
-        //     // ctx.body = { token, user };
-        //     ctx.body = { user };
-        //     ctx.status = 200;
-        // }
+        else {
+            // const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+            //     expiresIn: '1h',
+            // });
+            // ctx.body = { token, user };
+            await prisma.user.update({token: `${user.id}`});
+            ctx.body = { user };
+            ctx.status = 200;
+        }
     } catch (error) {
         ctx.status = 500;
         ctx.body = { error: error.message };

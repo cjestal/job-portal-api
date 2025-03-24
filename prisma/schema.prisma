@@ -43,6 +43,7 @@ model User {
   email           String           @unique
   phone           String
   password        String
+  token           String           @unique
   jobApplications JobApplication[]
   type            UserType
   company         Company?         @relation(fields: [companyId], references: [id])
