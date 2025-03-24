@@ -10,7 +10,7 @@ router.post('/login', async (ctx) => {
     try {
         const { email, password } = ctx.request.body;
         const user = await prisma.user.findUnique({ where: { email } });
-        
+
         if (!user) {
             ctx.status = 401;
             ctx.body = { error: 'Invalid email' };
@@ -23,8 +23,8 @@ router.post('/login', async (ctx) => {
             //     expiresIn: '1h',
             // });
             // ctx.body = { token, user };
-            await prisma.user.update({token: `${user.id}`});
-            ctx.body = { user };
+            // await prisma.user.update({token: `${user.id}`});
+            ctx.body = { id: user.id };
             ctx.status = 200;
         }
     } catch (error) {
