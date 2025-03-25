@@ -80,9 +80,11 @@ async function seed() {
         maxSalary: 120000,
         imageUri: 'software-engineer.jpg',
         postDate: new Date(),
+        arrangement: 'HYBRID', // Added arrangement
+        experience: 'MID', // Added experience
       },
     });
-
+    
     const job2 = await prisma.job.create({
       data: {
         title: 'Marketing Manager',
@@ -93,19 +95,25 @@ async function seed() {
         maxSalary: 90000,
         imageUri: 'marketing-manager.jpg',
         postDate: new Date(),
+        arrangement: 'REMOTE', // Added arrangement
+        experience: 'JUNIOR', // Added experience
       },
     });
-
+    
     const job3 = await prisma.job.create({
-        title: "Database Administrator",
+      data: {
+        title: 'Database Administrator',
         companyId: company3.id,
-        description: "Manage our databases.",
-        location: "Austin",
+        description: 'Manage our databases.',
+        location: 'Austin',
         minSalary: 90000,
         maxSalary: 130000,
-        imageUri: "dba.jpg",
-        postDate: new Date()
-    })
+        imageUri: 'dba.jpg',
+        postDate: new Date(),
+        arrangement: 'ONSITE', //Added arrangement
+        experience: 'SENIOR' // Added experience
+      },
+    });
 
     // Job Applications
     await prisma.jobApplication.create({
