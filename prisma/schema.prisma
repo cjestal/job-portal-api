@@ -61,7 +61,7 @@ model User {
   skills          Skill[]            @relation("UserSkills") // Added relation
   type            UserType
   company         Company?         @relation(fields: [companyId], references: [id])
-  companyId       Int?
+  companyId       Int?             @unique
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
 
@@ -84,9 +84,9 @@ model Company {
 model JobApplication {
   id          Int      @id @default(autoincrement())
   job         Job      @relation(fields: [jobId], references: [id])
-  jobId       Int
+  jobId       Int      @unique
   user        User     @relation(fields: [userId], references: [id])
-  userId      Int
+  userId      Int      @unique
   resume      String
   coverLetter String
   status      String
