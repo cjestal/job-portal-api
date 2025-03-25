@@ -84,14 +84,15 @@ model Company {
 model JobApplication {
   id          Int      @id @default(autoincrement())
   job         Job      @relation(fields: [jobId], references: [id])
-  jobId       Int      @unique
+  jobId       Int
   user        User     @relation(fields: [userId], references: [id])
-  userId      Int      @unique
-  resume      String
-  coverLetter String
-  status      String
+  userId      Int
+  resume      String?
+  coverLetter String?
+  status      String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  @@unique([jobId, userId])
 }
 
 model UserPost {
