@@ -62,11 +62,13 @@ async function seed() {
     });
 
     const company3 = await prisma.company.create({
+      data: {
         name: "Initech",
         location: "Austin",
         logoUrl: "initech.png",
         description: "We make software.",
         highlights: "Casual Friday every day.",
+      }
     })
 
     // Jobs
@@ -137,11 +139,13 @@ async function seed() {
     });
 
     await prisma.jobApplication.create({
+      data: {
         jobId: job3.id,
         userId: user1.id,
         resume: "john-resume2.pdf",
         coverLetter: "Another cover letter",
-        status: "Applied"
+        status: "Applied",
+      }
     })
 
     // Skills
