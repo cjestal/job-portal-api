@@ -1,123 +1,195 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-async function main() {
-    // Create users
+async function seed() {
+  try {
+    // Users
     const user1 = await prisma.user.create({
-        data: {
-            name: 'John Doe',
-            codeName: 'johndoe123',
-            email: 'johndoe@example.com',
-            phone: '123-456-7890',
-            password: 'password123',
-            token: '',
-            type: 'INDIVIDUAL',
-        },
+      data: {
+        name: 'John Doe',
+        codeName: 'johndoe',
+        email: 'user@test.com',
+        phone: '123-456-7890',
+        password: 'test123', // Password not hashed
+        type: 'INDIVIDUAL',
+      },
+    });
+
+    const companyUser = await prisma.user.create({
+      data: {
+        name: 'Acme Corp',
+        codeName: 'acmecorp',
+        email: 'company@test.com',
+        phone: '987-654-3210',
+        password: 'test123', // Password not hashed
+        type: 'COMPANY',
+      },
     });
 
     const user2 = await prisma.user.create({
-        data: {
-            name: 'Jane Doe',
-            codeName: 'janedoe123',
-            email: 'janedoe@example.com',
-            phone: '987-654-3210',
-            password: 'password123',
-            token: '',
-            type: 'INDIVIDUAL',
-        },
+      data: {
+        name: 'Jane Smith',
+        codeName: 'janesmith',
+        email: 'jane@test.com',
+        phone: '111-222-3333',
+        password: 'test123', // Password not hashed
+        type: 'INDIVIDUAL',
+      }
     });
 
-    // Create companies
+    // Companies
     const company1 = await prisma.company.create({
-        data: {
-            name: 'Company A',
-            location: 'New York',
-            logoUrl: 'https://example.com/company-a-logo.png',
-            description: 'Company A is a leading tech firm.',
-            highlights: 'Competitive salary, flexible work hours, opportunities for growth.',
+      data: {
+        name: 'Acme Corp',
+        location: 'New York',
+        logoUrl: 'acme.png',
+        description: 'We are a leading tech company.',
+        highlights: 'Great culture, innovative projects.',
+        User: {
+          connect: { id: companyUser.id },
         },
+      },
     });
 
     const company2 = await prisma.company.create({
-        data: {
-            name: 'Company B',
-            location: 'San Francisco',
-            logoUrl: 'https://example.com/company-b-logo.png',
-            description: 'Company B is a leading fintech firm.',
-            highlights: 'Competitive salary, flexible work hours, opportunities for growth.',
-        },
+      data: {
+        name: 'Globex Corp',
+        location: 'London',
+        logoUrl: 'globex.png',
+        description: 'We are a global firm.',
+        highlights: 'International environment.',
+      }
     });
 
-    // Create jobs
+    const company3 = await prisma.company.create({
+        name: "Initech",
+        location: "Austin",
+        logoUrl: "initech.png",
+        description: "We make software.",
+        highlights: "Casual Friday every day.",
+    })
+
+    // Jobs
     const job1 = await prisma.job.create({
-        data: {
-            title: 'Software Engineer',
-            location: 'New York',
-            minSalary: 80000.00,
-            maxSalary: 120000.00,
-            imageUri: 'https://example.com/software-engineer-image.jpg',
-            postDate: new Date('2022-01-01'),
-            isOpen: true,
-            description: 'Develop software applications',
-            companyId: company1.id,
-        },
+      data: {
+        title: 'Software Engineer',
+        companyId: company1.id,
+        description: 'Looking for a skilled software engineer.',
+        location: 'New York',
+        minSalary: 80000,
+        maxSalary: 120000,
+        imageUri: 'software-engineer.jpg',
+        postDate: new Date(),
+      },
     });
 
     const job2 = await prisma.job.create({
-        data: {
-            title: 'Data Scientist',
-            location: 'New York',
-            minSalary: 100000.00,
-            maxSalary: 150000.00,
-            imageUri: 'https://example.com/data-scientist-image.jpg',
-            postDate: new Date('2022-02-01'),
-            isOpen: true,
-            description: 'Analyze data and develop models',
-            companyId: company1.id,
-        },
+      data: {
+        title: 'Marketing Manager',
+        companyId: company2.id,
+        description: 'Manage our marketing campaigns.',
+        location: 'London',
+        minSalary: 60000,
+        maxSalary: 90000,
+        imageUri: 'marketing-manager.jpg',
+        postDate: new Date(),
+      },
     });
 
     const job3 = await prisma.job.create({
-        data: {
-            title: 'Product Manager',
-            location: 'San Francisco',
-            minSalary: 120000.00,
-            maxSalary: 180000.00,
-            imageUri: 'https://example.com/product-manager-image.jpg',
-            postDate: new Date('2022-03-01'),
-            isOpen: true,
-            description: 'Manage product development lifecycle',
-            companyId: company2.id,
-        },
-    });
+        title: "Database Administrator",
+        companyId: company3.id,
+        description: "Manage our databases.",
+        location: "Austin",
+        minSalary: 90000,
+        maxSalary: 130000,
+        imageUri: "dba.jpg",
+        postDate: new Date()
+    })
 
-    // Create job applications
+    // Job Applications
     await prisma.jobApplication.create({
-        data: {
-            jobId: job1.id,
-            userId: user1.id,
-            resume: 'Resume for John Doe',
-            coverLetter: 'Cover letter for John Doe',
-            status: 'Applied',
-        },
+      data: {
+        jobId: job1.id,
+        userId: user1.id,
+        resume: 'john-resume.pdf',
+        coverLetter: 'Dear Hiring Manager...',
+        status: 'Applied',
+      },
     });
 
     await prisma.jobApplication.create({
+      data: {
+        jobId: job2.id,
+        userId: user2.id,
+        resume: 'jane-resume.pdf',
+        coverLetter: 'To whom it may concern...',
+        status: 'Under Review',
+      },
+    });
+
+    await prisma.jobApplication.create({
+        jobId: job3.id,
+        userId: user1.id,
+        resume: "john-resume2.pdf",
+        coverLetter: "Another cover letter",
+        status: "Applied"
+    })
+
+    // Skills
+    const skill1 = await prisma.skill.create({ data: { name: 'JavaScript' } });
+    const skill2 = await prisma.skill.create({ data: { name: 'Marketing' } });
+    const skill3 = await prisma.skill.create({data: {name: "SQL"}})
+
+    // Topics
+    const topic1 = await prisma.topic.create({ data: { name: 'Technology' } });
+    const topic2 = await prisma.topic.create({ data: { name: 'Marketing' } });
+    const topic3 = await prisma.topic.create({ data: { name: 'Career Advice' } });
+
+    // User Posts
+    await prisma.userPost.create({
+      data: {
+        userId: user1.id,
+        title: 'My First Post',
+        content: 'This is my first post.',
+        imageUri: 'post1.jpg',
+        topicId: topic1.id,
+      },
+    });
+
+    await prisma.userPost.create({
+      data: {
+        userId: companyUser.id,
+        title: 'Company News',
+        content: 'We are hiring!',
+        imageUri: 'post2.jpg',
+        topicId: topic2.id,
+      },
+    });
+
+    await prisma.userPost.create({
         data: {
-            jobId: job2.id,
             userId: user2.id,
-            resume: 'Resume for Jane Doe',
-            coverLetter: 'Cover letter for Jane Doe',
-            status: 'Applied',
-        },
-    });
+            title: "Job Search Tips",
+            content: "Here are some job search tips",
+            imageUri: "post3.jpg",
+            topicId: topic3.id,
+        }
+    })
+
+    // connect skills to users and jobs.
+    await prisma.user.update({where: {id: user1.id}, data: {skills: {connect: [{id: skill1.id}, {id: skill3.id}]}}})
+    await prisma.user.update({where: {id: user2.id}, data: {skills: {connect: [{id: skill2.id}]}}})
+    await prisma.job.update({where: {id: job1.id}, data: {skills: {connect: [{id: skill1.id}]}}})
+    await prisma.job.update({where: {id: job2.id}, data: {skills: {connect: [{id: skill2.id}]}}})
+    await prisma.job.update({where: {id: job3.id}, data: {skills: {connect: [{id: skill3.id}]}}})
+
+    console.log('Seed data created successfully.');
+  } catch (error) {
+    console.error('Error seeding data:', error);
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
-main()
-    .catch((e) => {
-        console.error(e);
-        process.exit(1);
-    })
-    .finally(async () => {
-        await prisma.$disconnect();
-    });
+seed();
