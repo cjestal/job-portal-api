@@ -27,7 +27,10 @@ router.post('/', async (ctx) => {
 router.get('/', async (ctx) => {
     try {
         const userPosts = await prisma.userPost.findMany({
-            include: { user: true },
+            include: {
+                user: true,
+                topic: true,
+            },
         });
         ctx.body = userPosts;
         ctx.status = 200;
@@ -45,6 +48,7 @@ router.get('/:id', async (ctx) => {
             where: { id },
             include: {
                 user: true,
+                topic: true,
             },
         });
         if (!userPost) {
