@@ -120,6 +120,7 @@ router.get('/dashboard', async (ctx) => {
         userDetails: user,
         openJobs: openJobs,
         applicantCount: applicants.length,
+        applicants: applicants,
         closedJobs: closedJobs,
         rejectedApplications: rejectedApplications.length,
       };
