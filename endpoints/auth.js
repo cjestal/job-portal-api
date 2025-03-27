@@ -95,8 +95,14 @@ router.get('/dashboard', async (ctx) => {
         return;
       }
 
-      const openJobs = await prisma.job.findMany({ where: { companyId: company.id, isOpen: true } });
-      const closedJobs = await prisma.job.findMany({ where: { companyId: company.id, isOpen: false } });
+      const openJobs = await prisma.job.findMany({
+        where: { companyId: company.id, isOpen: true },
+        include: { company: { select: { name: true } } },
+      });
+      const closedJobs = await prisma.job.findMany({
+        where: { companyId: company.id, isOpen: false },
+        include: { company: { select: { name: true } } },
+      });
 
       const applicants = await prisma.jobApplication.findMany({
         where: {
