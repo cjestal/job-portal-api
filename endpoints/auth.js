@@ -74,4 +74,96 @@ router.post('/signup', async (ctx) => {
   }
 });
 
+// Dashboard
+router.get('/dashboard', async (ctx) => {
+  try {
+    const { userId } = ctx.query;
+    const user = await prisma.user.findUnique({ where: { id: parseInt(userId) } });
+
+    if (!user) {
+      ctx.status = 404;
+      ctx.body = { error: 'User not found' };
+      return;
+    }
+
+    if (user.type === 'COMPANY') {
+      const company = await prisma.company.findUnique({ where: { id: user.companyId } });
+
+      if (!company) {
+        ctx.status = 404;
+        ctx.body = { error: 'Company not found' };
+        return;
+      }
+
+      const openJobs = await prisma.job.findMany({ where: { companyId: company.id, isOpen: true } });
+      const closedJobs = await prisma.job.findMany({ where: { companyId: company.id, isOpen: false } });
+
+      const applicants = await prisma.jobApplication.findMany({
+        where: {
+          job: {
+            companyId: company.id,
+          },
+        },
+      });
+
+      const rejectedApplications = await prisma.jobApplication.findMany({
+        where: {
+          job: {
+            companyId: company.id,
+          },
+          status: 'rejected',
+        },
+      });
+
+      ctx.body = {
+        companyDetails: company,
+        userDetails: user,
+        openJobs: openJobs,
+        applicantCount: applicants.length,
+        closedJobs: closedJobs,
+        rejectedApplications: rejectedApplications.length,
+      };
+    } else if (user.type === 'INDIVIDUAL') {
+      const openApplications = await prisma.jobApplication.findMany({
+        where: {
+          userId: user.id,
+          job: {
+            isOpen: true,
+          },
+        },
+        include: {
+          job: true,
+        },
+      });
+
+      const pastApplications = await prisma.jobApplication.findMany({
+        where: {
+          userId: user.id,
+          job: {
+            isOpen: false,
+          },
+        },
+        include: {
+          job: true,
+        },
+      });
+
+      ctx.body = {
+        userDetails: user,
+        openApplications: openApplications,
+        pastApplications: pastApplications,
+      };
+    } else {
+      ctx.status = 400;
+      ctx.body = { error: 'Invalid user type' };
+      return;
+    }
+
+    ctx.status = 200;
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = { error: error.message };
+  }
+});
+
 module.exports = router;
