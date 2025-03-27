@@ -8,14 +8,14 @@ router.post('/', async (ctx) => {
   try {
     const job = await prisma.job.create({
       data: {
-        name: ctx.request.body.name, // Changed from title to name
+        title: ctx.request.body.title, // Changed from title to name
         companyId: ctx.request.body.companyId,
         location: ctx.request.body.location,
         minSalary: ctx.request.body.minSalary,
         maxSalary: ctx.request.body.maxSalary,
         imageUri: ctx.request.body.imageUri,
-        postDate: ctx.request.body.postDate,
-        isOpen: ctx.request.body.isOpen,
+        postDate: new Date(),
+        isOpen: true,
         arrangement: ctx.request.body.arrangement, // Added arrangement
         experience: ctx.request.body.experience, // Added experience
       },
