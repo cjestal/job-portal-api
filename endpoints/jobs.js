@@ -18,6 +18,7 @@ router.post('/', async (ctx) => {
         isOpen: true,
         arrangement: ctx.request.body.arrangement, // Added arrangement
         experience: ctx.request.body.experience, // Added experience
+        description: ctx.request.body.description, // Added experience
       },
     });
     ctx.body = job;
