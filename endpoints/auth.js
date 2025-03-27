@@ -104,6 +104,18 @@ router.get('/dashboard', async (ctx) => {
             companyId: company.id,
           },
         },
+        include: {
+          user: {
+            select: {
+              name: true,
+            },
+          },
+          job: {
+            select: {
+              title: true,
+            },
+          },
+        },
       });
 
       const rejectedApplications = await prisma.jobApplication.findMany({
