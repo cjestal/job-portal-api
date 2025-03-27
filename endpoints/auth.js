@@ -28,7 +28,7 @@ router.post('/login', async (ctx) => {
 // Register User
 router.post('/signup', async (ctx) => {
   try {
-    const { name, email, password, type, companyName, companyLocation, codeName, phone } = ctx.request.body;
+    const { name, email, password, type, companyName, companyLocation, codeName, phone, logoUrl, description, highlights } = ctx.request.body;
     let user;
 
     if (type === 'COMPANY') {
@@ -36,7 +36,9 @@ router.post('/signup', async (ctx) => {
         data: {
           name: companyName,
           location: companyLocation,
-          logoUrl: '',
+          logoUrl,
+          description,
+          highlights,
         },
       });
 
@@ -56,10 +58,10 @@ router.post('/signup', async (ctx) => {
         data: {
           name,
           email,
-          password: password,
+          password,
           type: 'INDIVIDUAL',
-          codeName: codeName,
-          phone: phone,
+          codeName,
+          phone,
         },
       });
     }
