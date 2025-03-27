@@ -142,4 +142,40 @@ router.get('/users/:userId/applications', async (ctx) => {
   }
 });
 
+// Apply for a Job
+router.post('/apply', async (ctx) => {
+  try {
+    const { jobId, userId } = ctx.request.body;
+
+    // Check if the user has already applied for the job
+    const existingApplication = await prisma.jobApplication.findFirst({
+      where: {
+        jobId,
+        userId,
+      },
+    });
+
+    if (existingApplication) {
+      ctx.status = 400;
+      ctx.body = { error: 'You have already applied for this job' };
+      return;
+    }
+
+    // Create a new job application
+    const jobApplication = await prisma.jobApplication.create({
+      data: {
+        jobId,
+        userId,
+        status: 'Pending', // Default status
+      },
+    });
+
+    ctx.body = jobApplication;
+    ctx.status = 201;
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = { error: error.message };
+  }
+});
+
 module.exports = router;
