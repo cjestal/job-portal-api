@@ -36,6 +36,7 @@ router.post('/signup', async (ctx) => {
         data: {
           name: companyName,
           location: companyLocation,
+          logoUrl: '',
         },
       });
 
